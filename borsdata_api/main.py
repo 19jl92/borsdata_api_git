@@ -22,6 +22,7 @@ from stock_names import stock_names
 from stock_prices_api import stock_prices_api
 from quandl_api import quandl_api
 from value_at_risk import value_at_risk
+from ebitda_per_share_api import ebitda_per_share
 
 # api requests 
 f_score_graham_dataframe = f_score_graham_api()
@@ -34,7 +35,7 @@ ev_ebit_dataframe = ev_ebit_api()
 time.sleep(1)
 magic_rank_dataframe = magic_rank_api()
 time.sleep(1)
-trend_dataframe = trend_api()
+trend_dataframe1, trend_dataframe2 = trend_api()
 time.sleep(1)
 rsi_dataframe = rsi_api()
 time.sleep(1)
@@ -43,6 +44,8 @@ time.sleep(1)
 stock_names_dataframe = stock_names()
 time.sleep(1)
 gold_dataframe, silver_dataframe = quandl_api()
+time.sleep(1)
+ebitda_per_share_dataframe = ebitda_per_share()
 
 
 frames = [stock_names_dataframe,
@@ -51,9 +54,11 @@ frames = [stock_names_dataframe,
           ebit_growth_dataframe,
           ev_ebit_dataframe,
           magic_rank_dataframe,
-          trend_dataframe,
+          trend_dataframe1,
+          trend_dataframe2,
           rsi_dataframe,
-          profit_stability_dataframe]
+          profit_stability_dataframe,
+          ebitda_per_share_dataframe]
 
 dataframe = join_dataframes(frames)
 
