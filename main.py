@@ -23,29 +23,39 @@ from stock_prices_api import stock_prices_api
 from quandl_api import quandl_api
 from value_at_risk import value_at_risk
 from ebitda_per_share_api import ebitda_per_share
+import getpass
 
-# api requests 
-f_score_graham_dataframe = f_score_graham_api()
+# api requests
+
+api_key = getpass.getpass("Input your borsdata api key: ")
+
+# check if user input the key or not
+if not api_key:
+    print("Missing key, please try agin")
+    api_key = getpass.getpass("Input your borsdata api key: ")
+
+
+f_score_graham_dataframe = f_score_graham_api(api_key)
 time.sleep(1)
-roic_api_dataframe = roic_api()
+roic_api_dataframe = roic_api(api_key)
 time.sleep(1)
-ebit_growth_dataframe = ebit_growth_api()
+ebit_growth_dataframe = ebit_growth_api(api_key)
 time.sleep(1)
-ev_ebit_dataframe = ev_ebit_api()
+ev_ebit_dataframe = ev_ebit_api(api_key)
 time.sleep(1)
-magic_rank_dataframe = magic_rank_api()
+magic_rank_dataframe = magic_rank_api(api_key)
 time.sleep(1)
-trend_dataframe1, trend_dataframe2 = trend_api()
+trend_dataframe1, trend_dataframe2 = trend_api(api_key)
 time.sleep(1)
-rsi_dataframe = rsi_api()
+rsi_dataframe = rsi_api(api_key)
 time.sleep(1)
-profit_stability_dataframe = profit_stability_api()
+profit_stability_dataframe = profit_stability_api(api_key)
 time.sleep(1)
-stock_names_dataframe = stock_names()
+stock_names_dataframe = stock_names(api_key)
 time.sleep(1)
 gold_dataframe, silver_dataframe = quandl_api()
 time.sleep(1)
-ebitda_per_share_dataframe = ebitda_per_share()
+ebitda_per_share_dataframe = ebitda_per_share(api_key)
 
 
 frames = [stock_names_dataframe,
@@ -65,8 +75,9 @@ dataframe = join_dataframes(frames)
 df = stock_screener(dataframe)
 
 
-x = stock_prices_api(df, gold_dataframe, silver_dataframe)
-print(x)
+x = stock_prices_api(df, gold_dataframe, silver_dataframe, api_key)
+#x = stock_prices_api(df)
+#print(x)
 
 stocks = list(x.columns.values)
 
