@@ -1,15 +1,16 @@
 import pandas as pd
 import requests
 
-def f_score_graham_api():
-    key = 'c0a2f9c9d5e04dd3aabe6395d3c03a1d'
+def f_score_graham_api(api_key):
+    key = api_key
     url = 'https://apiservice.borsdata.se/v1/instruments/kpis/171/last/sum'
-
-    # "https://apiservice.borsdata.se/v1/instruments/97/stockprices?
-    # authKey=c0a2f9c9d5e04dd3aabe6395d3c03a1d&from=2018-01-01&to=2019-01-01"
 
     content = requests.get(url + '?authKey=' + key,
                            headers={'content-type': 'application/json'})
+
+    if str(content) == '<Response [401]>':
+        print('Erroneous api key, please enter valid key')
+        quit()
 
     data2 = content.json()['values']
 

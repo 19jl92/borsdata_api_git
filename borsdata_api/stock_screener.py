@@ -8,10 +8,10 @@ def stock_screener(dataframe):
     # profit stability over the last 10 year = 10
     dataframe = dataframe[dataframe['profit_stability'] >= int(10)]
 
-    # profit stability over the last 10 year = 10
+    # roic equal or above 10 percent
     dataframe = dataframe[dataframe['roic'] >= int(10)]
 
-    # profit stability over the last 10 year = 10
+    # positive ebit growth
     dataframe = dataframe[dataframe['ebit_growth'] >= int(0)]
 
     # sanity check on 0 < EV/EBIT < 50
@@ -26,10 +26,11 @@ def stock_screener(dataframe):
     # profit stability over the last 10 year = 10
     dataframe = dataframe[(dataframe['rsi'] >= int(10)) & (dataframe['rsi'] <= int(60))]
 
-    # ebitda_per_share_dataframe > 0
+    # ebitda per share data frame > 0 equal to YoY growth
     dataframe = dataframe[(dataframe['ebitda_per_share'] >= int(0))]
 
     dataframe.sort_values('magic_rank', ascending=True, inplace=True)
     dataframe.reset_index(inplace=True)
+
 
     return dataframe

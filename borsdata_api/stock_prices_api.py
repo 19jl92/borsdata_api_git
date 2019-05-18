@@ -5,8 +5,8 @@ from join_dataframes import join_dataframes
 from trend_function import trend_function
 from adx import adx_function
 
-def stock_prices_api(dataframe, gold, silver):
-    key = 'c0a2f9c9d5e04dd3aabe6395d3c03a1d'
+def stock_prices_api(dataframe, gold, silver, api_key):
+    key = api_key
     url = 'https://apiservice.borsdata.se/v1/instruments/'
 
     stock_list = []

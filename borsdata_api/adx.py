@@ -2,19 +2,6 @@ import pandas as pd
 import requests
 import numpy as np
 
-
-key = 'c0a2f9c9d5e04dd3aabe6395d3c03a1d'
-url = 'https://apiservice.borsdata.se/v1/instruments/'
-
-
-#df = pd.DataFrame()
-
-#content = requests.get(url + '164' + '/stockprices' + '?authKey=' + key,
-#                   headers={'content-type': 'application/json'}).json()['stockPricesList']
-
-#prices = pd.DataFrame(content)
-
-#print(prices)
 def adx_function(prices):
 
     def TrueRange(prices):
