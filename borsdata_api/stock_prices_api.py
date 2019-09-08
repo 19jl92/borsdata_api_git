@@ -5,7 +5,7 @@ from join_dataframes import join_dataframes
 from trend_function import trend_function
 from adx import adx_function
 
-def stock_prices_api(dataframe, gold, silver, api_key):
+def stock_prices_api(dataframe, gold, api_key):
     key = api_key
     url = 'https://apiservice.borsdata.se/v1/instruments/'
 
@@ -26,7 +26,7 @@ def stock_prices_api(dataframe, gold, silver, api_key):
         stock_list.append(prices)
 
     stock_list.append(gold)
-    stock_list.append(silver)
+    #stock_list.append(silver)
     stock_dataframe = pd.concat(stock_list, axis=1, sort=True)
 
 

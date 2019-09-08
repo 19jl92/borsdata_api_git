@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def join_dataframes(frames):
     try:
         x = pd.concat(frames, axis=1, sort=True).dropna()
@@ -8,4 +9,3 @@ def join_dataframes(frames):
         quit()
 
     return x
-

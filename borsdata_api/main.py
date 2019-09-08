@@ -23,8 +23,8 @@ from stock_prices_api import stock_prices_api
 from quandl_api import quandl_api
 from value_at_risk import value_at_risk
 from ebitda_per_share_api import ebitda_per_share
+from outstanding_shares import outstanding_shares
 import getpass
-
 
 api_key = getpass.getpass("Input your borsdata api key: ")
 
@@ -32,6 +32,9 @@ api_key = getpass.getpass("Input your borsdata api key: ")
 if not api_key:
     print("Missing key, please try agin")
     api_key = getpass.getpass("Input your borsdata api key: ")
+
+# capital to invest
+Capital = float(input("Capital to invest: "))
 
 # api requests
 f_score_graham_dataframe = f_score_graham_api(api_key)
@@ -55,6 +58,8 @@ time.sleep(1)
 gold_dataframe, silver_dataframe = quandl_api()
 time.sleep(1)
 ebitda_per_share_dataframe = ebitda_per_share(api_key)
+time.sleep(1)
+outstanding_shares_dataframe = outstanding_shares(api_key)
 
 
 frames = [stock_names_dataframe,
@@ -67,20 +72,20 @@ frames = [stock_names_dataframe,
           trend_dataframe2,
           rsi_dataframe,
           profit_stability_dataframe,
-          ebitda_per_share_dataframe]
+          ebitda_per_share_dataframe,
+          outstanding_shares_dataframe
+          ]
 
 dataframe = join_dataframes(frames)
+print(dataframe)
 
 df = stock_screener(dataframe)
 
-
-x = stock_prices_api(df, gold_dataframe, silver_dataframe, api_key)
-#x = stock_prices_api(df)
-#print(x)
+x = stock_prices_api(df, gold_dataframe, api_key)
 
 stocks = list(x.columns.values)
 
-nr_of_data_series = len(list(x.columns.values))
+nr_of_data_series = len(stocks)
 
 x.dropna(inplace=True)
 
@@ -111,11 +116,11 @@ x = x[1:]
 ----------------------------------------------------------------'''
 
 x = np.array(x)
-x_t = np.array(x.T)  # transposed x array. 
+x_t = np.array(x.T)  # transposed x array.
 cov = np.cov(x_t)
 corr = np.corrcoef(x_t)
 
-num_of_portfolios = 25000
+num_of_portfolios = 50000
 results = np.zeros((num_of_portfolios, 3))
 vikt = np.zeros((num_of_portfolios, nr_of_data_series))
 
@@ -151,10 +156,8 @@ results_frame_vikt = pd.DataFrame(vikt, columns=stocks)
 '''-------------------------------------------------------------
                         PRINTING RESULT FRAME
 ----------------------------------------------------------------'''
-Capital = 120000
 
 print("----- MAX SHARP -----  ")
-# print(results_frame_vikt.iloc[max_sharp])
 max_sharp_capital = pd.DataFrame()
 max_sharp_capital['Weights'] = results_frame_vikt.iloc[max_sharp]
 max_sharp_capital['Capital'] = Capital*results_frame_vikt.iloc[max_sharp]
@@ -164,7 +167,6 @@ print("----- MAX SHARP RESULTS -----  ")
 print(results_frame.iloc[max_sharp])
 
 print("----- MIN VOL -----  ")
-# print(results_frame_vikt.iloc[min_std])
 min_vol_capital = pd.DataFrame()
 min_vol_capital['Weights'] = results_frame_vikt.iloc[min_std]
 min_vol_capital['Capital'] = Capital*results_frame_vikt.iloc[min_std]
@@ -181,7 +183,7 @@ time_series = x * np.matrix(results_frame_vikt.iloc[max_sharp].values).T
 time_series_cum = 100 * np.cumprod(np.array(time_series) + 1)
 
 time_series_df = pd.DataFrame(time_series, columns=['returns'])
-VaR_max_sharp = value_at_risk(time_series_df) 
+VaR_max_sharp = value_at_risk(time_series_df)
 time_series_df['rea_var'] = 252 * np.cumsum(time_series_df.returns ** 2) / np.arange(len(time_series_df.returns))
 time_series_df['rea_vol'] = np.sqrt(time_series_df.rea_var)
 

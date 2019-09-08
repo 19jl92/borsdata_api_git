@@ -3,10 +3,10 @@
 def stock_screener(dataframe):
 
     # f_score_graham > 10
-    dataframe = dataframe[dataframe['f_score_graham'] >= int(10)]
+    dataframe = dataframe[dataframe['f_score_graham'] >= int(0)]
 
     # profit stability over the last 10 year = 10
-    dataframe = dataframe[dataframe['profit_stability'] >= int(10)]
+    dataframe = dataframe[dataframe['profit_stability'] >= int(0)]
 
     # roic equal or above 10 percent
     dataframe = dataframe[dataframe['roic'] >= int(10)]
@@ -28,6 +28,9 @@ def stock_screener(dataframe):
 
     # ebitda per share data frame > 0 equal to YoY growth
     dataframe = dataframe[(dataframe['ebitda_per_share'] >= int(0))]
+
+    # number of outstanding_shares shall be lower than 30M
+    dataframe = dataframe[(dataframe['outstanding_shares'] < int(30))]
 
     dataframe.sort_values('magic_rank', ascending=True, inplace=True)
     dataframe.reset_index(inplace=True)
