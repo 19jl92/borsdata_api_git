@@ -77,7 +77,7 @@ frames = [stock_names_dataframe,
           ]
 
 dataframe = join_dataframes(frames)
-print(dataframe)
+#print(dataframe)
 
 df = stock_screener(dataframe)
 
