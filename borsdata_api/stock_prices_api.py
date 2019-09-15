@@ -25,8 +25,11 @@ def stock_prices_api(dataframe, gold, api_key):
         prices = prices[~prices.index.duplicated(keep='first')]
         stock_list.append(prices)
 
-    stock_list.append(gold)
-    #stock_list.append(silver)
+    if gold.empty:
+        pass
+    else:
+        stock_list.append(gold)
+
     stock_dataframe = pd.concat(stock_list, axis=1, sort=True)
 
 

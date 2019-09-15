@@ -7,7 +7,6 @@ def trend_function(lista):
     for i in range(len(lista)):
         temp_lista = []
         temp_lista.append(lista[i])
-        #lista[i].columns.values[0]
         rolling_200 = lista[i].rolling(200).mean().dropna()
         rolling_200 = rolling_200.rename(columns={rolling_200.columns.values[0]: '200'})
         temp_lista.append(rolling_200)

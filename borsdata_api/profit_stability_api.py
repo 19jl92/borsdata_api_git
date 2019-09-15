@@ -4,7 +4,7 @@ import requests
 
 def profit_stability_api(api_key):
     key = api_key
-    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/174/10year/stabil'
+    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/174/5year/stabil'
 
     content = requests.get(url + '?authKey=' + key,
                            headers={'content-type': 'application/json'})

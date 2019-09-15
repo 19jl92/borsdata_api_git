@@ -3,7 +3,7 @@ import requests
 
 def ebit_growth_api(api_key):
     key = api_key
-    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/55/10year/cagr'
+    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/55/5year/cagr'
 
     content = requests.get(url + '?authKey=' + key,
                            headers={'content-type': 'application/json'})

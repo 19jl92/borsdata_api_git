@@ -5,6 +5,7 @@ import datetime
 from matplotlib import pyplot as plt
 import seaborn as sns
 import pandas as pd
+import mysql_code as mc
 
 # python functions
 import data_analysis as gbm
@@ -30,7 +31,7 @@ api_key = getpass.getpass("Input your borsdata api key: ")
 
 # check if user input the key or not
 if not api_key:
-    print("Missing key, please try agin")
+    print("Missing key, please try again")
     api_key = getpass.getpass("Input your borsdata api key: ")
 
 # capital to invest
@@ -61,7 +62,6 @@ ebitda_per_share_dataframe = ebitda_per_share(api_key)
 time.sleep(1)
 outstanding_shares_dataframe = outstanding_shares(api_key)
 
-
 frames = [stock_names_dataframe,
           f_score_graham_dataframe,
           roic_api_dataframe,
@@ -73,15 +73,21 @@ frames = [stock_names_dataframe,
           rsi_dataframe,
           profit_stability_dataframe,
           ebitda_per_share_dataframe,
-          outstanding_shares_dataframe
+          outstanding_shares_dataframe,
           ]
 
 dataframe = join_dataframes(frames)
-#print(dataframe)
+
 
 df = stock_screener(dataframe)
 
-x = stock_prices_api(df, gold_dataframe, api_key)
+if df.empty:
+    print('No stocks mached your criteria')
+    exit()
+else:
+    x = stock_prices_api(df, gold_dataframe, api_key)
+
+
 
 stocks = list(x.columns.values)
 
@@ -175,6 +181,9 @@ print(min_vol_capital)
 print("----- MIN VOL RESULTS -----  ")
 print(results_frame.iloc[min_std])
 print('')
+
+#mc.mysql_code(dataframe, df)
+
 
 '''-------------------------------------------------------------
                         BUILDING TIME SERIES
