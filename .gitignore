@@ -9,6 +9,8 @@ __pycache__/
 *.iml
 # testing file not be added to repo
 testing.py
+cronjobfile.py
+config.py
 
 # C extensions
 *.so
