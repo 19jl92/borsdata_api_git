@@ -7,4 +7,4 @@ numpy==1.14.3
 statsmodels==0.9.0
 scipy==1.1.0
 requests==2.20.0
-seaborn==0.8.1
+seaborn==0.9.0
