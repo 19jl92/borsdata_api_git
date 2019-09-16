@@ -11,6 +11,8 @@ __pycache__/
 testing.py
 cronjobfile.py
 config.py
+*pipfile
+*pipfile.lock
 
 # C extensions
 *.so
