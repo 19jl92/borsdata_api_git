@@ -11,6 +11,7 @@ __pycache__/
 testing.py
 cronjobfile.py
 config.py
+settings.txt
 *pipfile
 *pipfile.lock
 
@@ -31,6 +32,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+venv/
 
 # Installer logs
 pip-log.txt
