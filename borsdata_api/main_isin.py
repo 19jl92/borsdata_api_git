@@ -11,7 +11,7 @@ import pandas as pd
 import data_analysis as gbm
 from f_score_graham_api import f_score_graham_api
 from roic_api import roic_api
-from ebita_growth_api import ebita_growth_api
+from ebita_growth_api import ebit_growth_api
 from magic_rank_api import magic_rank_api
 from trend_api import trend_api
 from rsi_api import rsi_api
@@ -26,6 +26,8 @@ from value_at_risk import value_at_risk
 from ebitda_per_share_api import ebitda_per_share
 from outstanding_shares import outstanding_shares
 import getpass
+from find_stocks import find_stocks
+from stock_prices_api_isins import stock_prices_api_isins
 
 api_key = getpass.getpass("Input your borsdata api key: ")
 
@@ -34,65 +36,49 @@ if not api_key:
     print("Missing key, please try again")
     api_key = getpass.getpass("Input your borsdata api key: ")
 
-# capital to invest
-Capital = float(input("Capital to invest: "))
+list_of_stocks = [
+ "CH0012221716",
+ "FI4000297767",
+ "GB0009895292",
+ "SE0000103699",
+ "SE0000103814",
+ "SE0000106270",
+ "SE0000107419",
+ "SE0000108227",
+ #"SE0000108656",
+ "SE0000112724",
+ "SE0000113250",
+ "SE0000115446",
+ "SE0000148884",
+ "SE0000163594",
+ "SE0000171100",
+ "SE0000202624",
+ "SE0000242455",
+ "SE0000310336",
+ "SE0000382335",
+ "SE0000667891",
+ "SE0000667925",
+ #"SE0000695876",
+ "SE0005190238",
+ "SE0007100581",
+ "SE0007100599",
+ #"SE0009922164",
+ "SE0011166610",
+ "SE0011166628",
+ "SE0012455673",
+ "SE0014684528"
+]
 
-# api requests
-#f_score_graham_dataframe = f_score_graham_api(api_key)
-time.sleep(1)
-roic_api_dataframe = roic_api(api_key)
-time.sleep(1)
-ebita_growth_dataframe = ebita_growth_api(api_key)
-time.sleep(1)
-ev_ebit_dataframe = ev_ebit_api(api_key)
-time.sleep(1)
-magic_rank_dataframe = magic_rank_api(api_key)
-time.sleep(1)
-trend_dataframe1, trend_dataframe2 = trend_api(api_key)
-time.sleep(1)
-#rsi_dataframe = rsi_api(api_key)
-time.sleep(1)
-profit_stability_dataframe = profit_stability_api(api_key)
-time.sleep(1)
-stock_names_dataframe = stock_names(api_key)
-time.sleep(1)
-gold_dataframe, silver_dataframe = quandl_api()
-time.sleep(1)
-ebitda_per_share_dataframe = ebitda_per_share(api_key)
-time.sleep(1)
-outstanding_shares_dataframe = outstanding_shares(api_key)
-
-frames = [stock_names_dataframe,
-          #f_score_graham_dataframe,
-          roic_api_dataframe,
-          ebita_growth_dataframe,
-          ev_ebit_dataframe,
-          #magic_rank_dataframe,
-          trend_dataframe1,
-          trend_dataframe2,
-          #rsi_dataframe,
-          profit_stability_dataframe,
-          ebitda_per_share_dataframe,
-          outstanding_shares_dataframe,
-          ]
-
-dataframe = join_dataframes(frames)
-
-
-df = stock_screener(dataframe)
-
-if df.empty:
-    print('No stocks mached your criteria')
-    exit()
-else:
-    x = stock_prices_api(df, gold_dataframe, api_key)
+stocks_df = find_stocks(list_of_stocks, api_key)
+x = stock_prices_api_isins(stocks_df, api_key)
 
 stocks = list(x.columns.values)
-
-
+Capital = 100000
 nr_of_data_series = len(stocks)
-
+#x.to_csv('test.csv', sep=',', index=True, header=True)
+#quit()
 x.dropna(inplace=True)
+
 
 '''-------------------------------------------------------------
   MATPLOTLIB CAN ONLY HANDLE DATETIME FORMATS - CONVERSION CODE
@@ -106,10 +92,10 @@ for t in range(0, len(x_dates)):
 ----------------------------------------------------------------'''
 std = []
 mean = []
-for index in x.columns:
-    x[index] = np.log(x[index] / x[index].shift(1))
-    std.append(np.std(x[index])*np.sqrt(252))
-    mean.append(np.mean(x[index])*252)
+for i in x.columns:
+    x[i] = np.log(x[i] / x[i].shift(1))
+    std.append(np.std(x[i])*np.sqrt(252))
+    mean.append(np.mean(x[i])*252)
 
 # stock returns dataframe
 x = x[1:]

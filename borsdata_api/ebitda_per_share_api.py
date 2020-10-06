@@ -3,7 +3,7 @@ import requests
 
 def ebitda_per_share(api_key):
     key = api_key
-    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/54/last/quarter'
+    url = 'https://apiservice.borsdata.se/v1/instruments/kpis/54/1year/cagr'
 
     content = requests.get(url + '?authKey=' + key,
                            headers={'content-type': 'application/json'})
