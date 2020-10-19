@@ -11,7 +11,7 @@ import pandas as pd
 import data_analysis as gbm
 from f_score_graham_api import f_score_graham_api
 from roic_api import roic_api
-from ebita_growth_api import ebit_growth_api
+from ebita_growth_api import ebita_growth_api
 from magic_rank_api import magic_rank_api
 from trend_api import trend_api
 from rsi_api import rsi_api
@@ -37,36 +37,15 @@ if not api_key:
     api_key = getpass.getpass("Input your borsdata api key: ")
 
 list_of_stocks = [
- "CH0012221716",
- "FI4000297767",
- "GB0009895292",
- "SE0000103699",
- "SE0000103814",
- "SE0000106270",
- "SE0000107419",
- "SE0000108227",
- #"SE0000108656",
- "SE0000112724",
- "SE0000113250",
- "SE0000115446",
- "SE0000148884",
- "SE0000163594",
- "SE0000171100",
- "SE0000202624",
- "SE0000242455",
- "SE0000310336",
- "SE0000382335",
- "SE0000667891",
- "SE0000667925",
- #"SE0000695876",
- "SE0005190238",
- "SE0007100581",
- "SE0007100599",
- #"SE0009922164",
- "SE0011166610",
- "SE0011166628",
- "SE0012455673",
- "SE0014684528"
+"DK0060055861",
+"FI4000115464",
+"SE0000421273",
+"SE0000725624",
+"SE0001426131",
+"SE0001790791",
+"SE0004576346",
+"SE0005497732",
+"SE0007075056"
 ]
 
 stocks_df = find_stocks(list_of_stocks, api_key)
