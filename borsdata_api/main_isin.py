@@ -55,7 +55,6 @@ stocks = list(x.columns.values)
 Capital = 100000
 nr_of_data_series = len(stocks)
 #x.to_csv('test.csv', sep=',', index=True, header=True)
-#quit()
 x.dropna(inplace=True)
 
 
@@ -76,10 +75,8 @@ for i in x.columns:
     std.append(np.std(x[i])*np.sqrt(252))
     mean.append(np.mean(x[i])*252)
 
-# stock returns dataframe
 x = x[1:]
-# VaR_array = value_at_risk(x)
-# print(VaR_array)
+
 
 '''-------------------------------------------------------------
                 CALCUATING REUSLTS DATAFRAME
@@ -170,7 +167,6 @@ print(pd.DataFrame(VaR_max_sharp))
 print("----- MIN VOL VaR -----  ")
 print(pd.DataFrame(VaR_min_vol))
 print('')
-
 
 
 '''-------------------------------------------------------------
