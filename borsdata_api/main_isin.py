@@ -35,24 +35,19 @@ api_key = getpass.getpass("Input your borsdata api key: ")
 if not api_key:
     print("Missing key, please try again")
     api_key = getpass.getpass("Input your borsdata api key: ")
+# capital to invest
+Capital = float(input("Capital to invest: "))
 
 list_of_stocks = [
-"DK0060055861",
-"FI4000115464",
-"SE0000421273",
-"SE0000725624",
-"SE0001426131",
-"SE0001790791",
-"SE0004576346",
-"SE0005497732",
-"SE0007075056"
+"SE0007871645",
+"MT0000780107",
+"SE0009216278"
 ]
 
 stocks_df = find_stocks(list_of_stocks, api_key)
 x = stock_prices_api_isins(stocks_df, api_key)
 
 stocks = list(x.columns.values)
-Capital = 100000
 nr_of_data_series = len(stocks)
 #x.to_csv('test.csv', sep=',', index=True, header=True)
 x.dropna(inplace=True)
