@@ -5,7 +5,7 @@ from join_dataframes import join_dataframes
 from trend_function import trend_function
 from adx import adx_function
 
-def stock_prices_api_isins(df, api_key):
+def stock_prices_api_isins(df, metals, api_key):
     key = api_key
     url = 'https://apiservice.borsdata.se/v1/instruments/'
     stock_list = []
@@ -19,10 +19,9 @@ def stock_prices_api_isins(df, api_key):
         prices.set_index('date', inplace=True)
         prices = prices[~prices.index.duplicated(keep='first')]
         stock_list.append(prices)
+    if metals:
+        for k in metals:
+            stock_list.append(k)
 
-    #if gold.empty:
-    #    pass
-    #else:
-    #    stock_list.append(gold)
     stock_dataframe = pd.concat(stock_list, axis=1, sort=True)
     return stock_dataframe

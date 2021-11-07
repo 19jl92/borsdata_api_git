@@ -89,7 +89,6 @@ else:
 
 stocks = list(x.columns.values)
 
-
 nr_of_data_series = len(stocks)
 
 x.dropna(inplace=True)
