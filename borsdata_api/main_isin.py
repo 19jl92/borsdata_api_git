@@ -5,7 +5,6 @@ import datetime
 from matplotlib import pyplot as plt
 import seaborn as sns
 import pandas as pd
-#import mysql_code as mc
 
 # python functions
 import data_analysis as gbm
@@ -28,6 +27,7 @@ from outstanding_shares import outstanding_shares
 import getpass
 from find_stocks import find_stocks
 from stock_prices_api_isins import stock_prices_api_isins
+from find_metals import find_metals
 
 api_key = getpass.getpass("Input your borsdata api key: ")
 
@@ -39,13 +39,18 @@ if not api_key:
 Capital = float(input("Capital to invest: "))
 
 list_of_stocks = [
-"SE0007871645",
-"MT0000780107",
-"SE0009216278"
+"SE0012673267",
+"MT0000780107"
 ]
 
+# add the names silver or gold to include in portfolio
+list_of_metals = [
+'gold'
+]
+
+metals = find_metals(list_of_metals)
 stocks_df = find_stocks(list_of_stocks, api_key)
-x = stock_prices_api_isins(stocks_df, api_key)
+x = stock_prices_api_isins(stocks_df, metals, api_key)
 
 stocks = list(x.columns.values)
 nr_of_data_series = len(stocks)
