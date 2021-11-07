@@ -17,3 +17,6 @@ def quandl_api():
         return pd.DataFrame(), pd.DataFrame()
 
     return x, s
+
+if __name__ == '__main__':
+    quandl_api()
